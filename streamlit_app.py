@@ -40,7 +40,19 @@ category_df = df[df["Category"] == selected_category]
 sub_categories = sorted(category_df["Sub_Category"].unique())
 selected_subs = st.multiselect("Select Sub-Categories", sub_categories)
 
-# Keep only rows where Sub_Category is selected
+# **3** Line chart of monthly sales for the selected Sub-Categories
+if selected_subs:
+    sales_by_month_sub = (
+        sub_df.groupby([pd.Grouper(freq="ME"), "Sub_Category"])["Sales"]
+        .sum()
+        .unstack()
+        .fillna(0)
+    )
+    st.line_chart(sales_by_month_sub)
+else:
+    st.info("Select at least one Sub-Category to see the chart.")
+
+# Keep rows only where Sub Category is selected
 sub_df = category_df[category_df["Sub_Category"].isin(selected_subs)]
 
 st.write("## Your additions")
