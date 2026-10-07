@@ -40,6 +40,9 @@ category_df = df[df["Category"] == selected_category]
 sub_categories = sorted(category_df["Sub_Category"].unique())
 selected_subs = st.multiselect("Select Sub-Categories", sub_categories)
 
+# Keep rows only where Sub Category is selected
+sub_df = category_df[category_df["Sub_Category"].isin(selected_subs)]
+
 # **3** Line chart of monthly sales for the selected Sub-Categories
 if selected_subs:
     sales_by_month_sub = (
@@ -51,9 +54,6 @@ if selected_subs:
     st.line_chart(sales_by_month_sub)
 else:
     st.info("Select at least one Sub-Category to see the chart.")
-
-# Keep rows only where Sub Category is selected
-sub_df = category_df[category_df["Sub_Category"].isin(selected_subs)]
 
 st.write("## Your additions")
 st.write("### (1) add a drop down for Category (https://docs.streamlit.io/library/api-reference/widgets/st.selectbox)")
