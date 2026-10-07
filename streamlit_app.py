@@ -52,6 +52,15 @@ if selected_subs:
         .fillna(0)
     )
     st.line_chart(sales_by_month_sub)
+        # **4** Adding three metrics for the selected Sub-Categories
+    total_sales = sub_df["Sales"].sum()
+    total_profit = sub_df["Profit"].sum()
+    profit_margin = (total_profit / total_sales) * 100
+
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Total Sales", f"${total_sales:,.2f}")
+    col2.metric("Total Profit", f"${total_profit:,.2f}")
+    col3.metric("Profit Margin", f"{profit_margin:.2f}%")
 else:
     st.info("Select at least one Sub-Category to see the chart.")
 
