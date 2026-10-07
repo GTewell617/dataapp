@@ -56,11 +56,13 @@ if selected_subs:
     total_sales = sub_df["Sales"].sum()
     total_profit = sub_df["Profit"].sum()
     profit_margin = (total_profit / total_sales) * 100
-
+        # **5** Overall profit margin across all products
+    overall_margin = (df["Profit"].sum() / df["Sales"].sum()) * 100
+    margin_delta = profit_margin - overall_margin
     col1, col2, col3 = st.columns(3)
     col1.metric("Total Sales", f"${total_sales:,.2f}")
     col2.metric("Total Profit", f"${total_profit:,.2f}")
-    col3.metric("Profit Margin", f"{profit_margin:.2f}%")
+    col3.metric("Profit Margin", f"{profit_margin:.2f}%", delta=f"{margin_delta:.2f}%")
 else:
     st.info("Select at least one Sub-Category to see the chart.")
 
